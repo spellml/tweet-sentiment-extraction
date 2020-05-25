@@ -263,7 +263,7 @@ def train_fn(dataloader, model, optimizer, device, scheduler, epoch_num):
 
 
 def main():
-    for epoch in epochs:
+    for epoch in range(epochs):
         train_fn(dataloader, model, optimizer, device, scheduler, epoch)
         torch.save(model.state_dict(), f"/spell/checkpoints/model_{epoch}.pth")
 
