@@ -102,6 +102,25 @@ def process_data(tweet, selected_text, sentiment, tokenizer, max_len):
         "y_last": y_last
     }
 
+class TwitterSentimentExtractionDataset:
+    def __init__(self, df):
+        self.df = df
+        self.tokenizer = tokenizers.BertWordPieceTokenizer(
+            f"/mnt/bert-base-uncased/vocab.txt", lowercase=True
+        )
+        self.max_len = 128
+    
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, item):
+        return process_data(
+            self.df.text[item],
+            self.df.selected_text[item], 
+            self.df.sentiment[item],
+            self.tokenizer,
+            self.max_len
+        )
 
 # preprocessing pass; see comments in the previous code cell on why this is necessary
 X_train_preprocessing_pass = TwitterSentimentExtractionDataset(train)
@@ -123,26 +142,6 @@ for i in range(len(train)):
 del X_train_preprocessing_pass
 train_orig = train
 X_train_df = train.iloc[good_idxs].reset_index(drop=True)
-
-class TwitterSentimentExtractionDataset:
-    def __init__(self, df):
-        self.df = df
-        self.tokenizer = tokenizers.BertWordPieceTokenizer(
-            f"/mnt/bert-base-uncased/vocab.txt", lowercase=True
-        )
-        self.max_len = 128
-    
-    def __len__(self):
-        return len(self.df)
-
-    def __getitem__(self, item):
-        return process_data(
-            self.df.text[item],
-            self.df.selected_text[item], 
-            self.df.sentiment[item],
-            self.tokenizer,
-            self.max_len
-        )
 
 class TwitterSentimentExtractionModel(torch.nn.Module):
     def __init__(self):
