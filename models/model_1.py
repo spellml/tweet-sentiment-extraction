@@ -263,6 +263,10 @@ def train_fn(dataloader, model, optimizer, device, scheduler, epoch_num):
 
 
 def main():
+    checkpoints_dir = "/spell/checkpoints/"
+    if not os.path.exists(checkpoints_dir):
+        os.mkdir(checkpoints_dir)
+    
     for epoch in range(epochs):
         train_fn(dataloader, model, optimizer, device, scheduler, epoch)
         torch.save(model.state_dict(), f"/spell/checkpoints/model_{epoch}.pth")
