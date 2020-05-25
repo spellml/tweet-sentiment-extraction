@@ -256,8 +256,6 @@ def train_fn(dataloader, model, optimizer, device, scheduler, epoch_num):
         
         if idx % 10 == 0:
             print(f"epoch {epoch_num}, batch {idx} training loss: {losses[-1]}")
-        
-        break
 
     return losses
 
@@ -273,4 +271,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    torch.save(model.state_dict(), "/spell/")
