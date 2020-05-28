@@ -223,7 +223,10 @@ scheduler = get_linear_schedule_with_warmup(
 )
 
 # tensorboard writer
-writer = SummaryWriter(f'/spell/tensorboards/model_1')
+writer = SummaryWriter(f'/spell/tensorboards/model_2')
+
+# mixed-precision gradient scaler
+scaler = torch.cuda.amp.GradScaler()
 
 # train func for one epoch of training
 def train_fn(dataloader, model, optimizer, device, scheduler, epoch_num):
@@ -240,18 +243,27 @@ def train_fn(dataloader, model, optimizer, device, scheduler, epoch_num):
         y_last = fn("y_last")
         
         model.zero_grad()
-        y_pred_start_logits, y_pred_end_logits = model(
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-            token_type_ids=token_type_ids,
-        )
-        loss = loss_fn(y_pred_start_logits, y_pred_end_logits, y_first, y_last)
-        loss.backward()
-        optimizer.step()
+        
+        # mixed-precision autocast
+        with torch.cuda.amp.autocast():        
+            y_pred_start_logits, y_pred_end_logits = model(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                token_type_ids=token_type_ids,
+            )
+            loss = loss_fn(y_pred_start_logits, y_pred_end_logits, y_first, y_last)
+            y_pred_starts = torch.softmax(y_pred_start_logits, dim=1).cpu().detach().numpy()
+            y_pred_ends = torch.softmax(y_pred_end_logits, dim=1).cpu().detach().numpy()
+        
+        # mixed-precision scaling
+        scaler.scale(loss).backward()        
+        # loss.backward()
+        
+        scaler.step(optimizer)
+        scaler.update()
+        # optimizer.step()
         scheduler.step()
-
-        y_pred_starts = torch.softmax(y_pred_start_logits, dim=1).cpu().detach().numpy()
-        y_pred_ends = torch.softmax(y_pred_end_logits, dim=1).cpu().detach().numpy()
+        
         lv = loss.item()
         losses.append(lv)
         writer.add_scalar('training loss', lv, epoch_num * len(dataloader) + idx)
