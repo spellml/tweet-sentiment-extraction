@@ -1,4 +1,4 @@
-export KAGGLE_USERNAME=residentmario KAGGLE_KEY=ea4163444bc3b21c1b810b218c385038
+export KAGGLE_USERNAME=YOUR_USERNAME KAGGLE_KEY=YOUR_KEY
 kaggle competitions download tweet-sentiment-extraction
 unzip tweet-sentiment-extraction.zip -d /mnt/tweet-sentiment-extraction/
 rm tweet-sentiment-extraction.zip
