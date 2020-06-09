@@ -1,4 +1,3 @@
-export KAGGLE_USERNAME=YOUR_USERNAME KAGGLE_KEY=YOUR_KEY
 kaggle competitions download tweet-sentiment-extraction
 unzip tweet-sentiment-extraction.zip -d /mnt/tweet-sentiment-extraction/
 rm tweet-sentiment-extraction.zip
