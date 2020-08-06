@@ -6,7 +6,7 @@ To run code and notebooks in a Spell workspace:
 
 ```bash
 spell jupyter --lab \
-  --github-url https://github.com/ResidentMario/spell-tweet-sentiment-extraction.git \
+  --github-url https://github.com/spellml/tweet-sentiment-extraction.git \
   --env KAGGLE_USERNAME=YOUR_USERNAME \
   --env KAGGLE_KEY=YOUR_KEY \
   tweet-sentiment-extraction
@@ -17,18 +17,18 @@ To execute the training scripts in a Spell run:
 ```bash
 spell run \
   --machine-type t4 \
-  --github-url https://github.com/ResidentMario/spell-tweet-sentiment-extraction.git \
+  --github-url https://github.com/spellml/tweet-sentiment-extraction.git \
   --pip transformers --pip tokenizers --pip kaggle \
   --env KAGGLE_USERNAME=YOUR_USERNAME \
   --env KAGGLE_KEY=YOUR_KEY \
   --tensorboard-dir /spell/tensorboards/model_1 \
-  "chmod +x /spell/scripts/download_data.sh; chmod +x /spell/scripts/upgrade_env.sh; /spell/scripts/download_data.sh; /spell/scripts/upgrade_env.sh; python /spell/models/model_1.py"
+  "chmod +x /spell/scripts/download_data.sh /spell/scripts/upgrade_env.sh; /spell/scripts/download_data.sh; /spell/scripts/upgrade_env.sh; python /spell/models/model_1.py"
 ```
 
 ```bash
 spell run \
   --machine-type t4 \
-  --github-url https://github.com/ResidentMario/spell-tweet-sentiment-extraction.git \
+  --github-url https://github.com/spellml/tweet-sentiment-extraction.git \
   --pip transformers --pip tokenizers --pip kaggle \
   --env KAGGLE_USERNAME=YOUR_USERNAME \
   --env KAGGLE_KEY=YOUR_KEY \
