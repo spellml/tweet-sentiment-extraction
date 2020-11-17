@@ -150,12 +150,8 @@ class TwitterSentimentExtractionModel(torch.nn.Module):
         cfg["output_hidden_states"] = True
         cfg = transformers.BertConfig.from_dict(cfg)
         
-        # NEW
         bert = transformers.BertModel.from_pretrained("bert-base-uncased", config=cfg)
-        qbert = torch.quantization.quantize_dynamic(
-            bert, {torch.nn.Linear}, dtype=torch.qint8
-        )
-        self.bert = qbert        
+        self.bert = bert
         self.drop_out = nn.Dropout(0.1)
         self.l0 = nn.Linear(768 * 2, 2)
         torch.nn.init.normal_(self.l0.weight, std=0.02)
@@ -278,6 +274,10 @@ def main():
         avg_loss = np.mean(losses)
         print(f"epoch {epoch}, average training loss: {avg_loss}")
         torch.save(model.state_dict(), f"/spell/checkpoints/model_{epoch}.pth")
+    
+    # NEW
+    qbert = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
+    torch.save(model.state_dict(), f"/spell/checkpoints/model_{epoch}_quantized.pth")
 
 if __name__ == "__main__":
     main()
