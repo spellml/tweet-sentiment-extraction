@@ -276,8 +276,8 @@ def main():
         torch.save(model.state_dict(), f"/spell/checkpoints/model_{epoch}.pth")
     
     # NEW
-    qbert = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
-    torch.save(model.state_dict(), f"/spell/checkpoints/model_{epoch}_quantized.pth")
+    qmodel = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
+    torch.save(qmodel.state_dict(), f"/spell/checkpoints/model_{epoch}_quantized.pth")
 
 if __name__ == "__main__":
     main()
