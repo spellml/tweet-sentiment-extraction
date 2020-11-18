@@ -182,7 +182,7 @@ class TwitterSentimentExtractionModel(torch.nn.Module):
 
 # constants
 batch_size = 64
-if torch.cuda.device_count() > 1:
+if torch.cuda.device_count() >= 1:
     device = torch.device("cuda")
     is_cpu_run = False
 else:
