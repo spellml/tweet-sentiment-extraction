@@ -182,7 +182,10 @@ class TwitterSentimentExtractionModel(torch.nn.Module):
 
 # constants
 batch_size = 64
-device = torch.device("cuda")
+if torch.cuda.device_count() > 1:
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
 # dataset and dataloader
 dataset = TwitterSentimentExtractionDataset(X_train_df)
