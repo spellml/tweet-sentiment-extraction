@@ -180,8 +180,11 @@ class TwitterSentimentExtractionModel(torch.nn.Module):
         # y_start, y_end = self.out(start_logits), self.out(end_logits)
         # return y_start, y_end
 
-# dataset and dataloader
+# constants
 batch_size = 64
+device = torch.device("cuda")
+
+# dataset and dataloader
 dataset = TwitterSentimentExtractionDataset(X_train_df)
 dataloader = torch.utils.data.DataLoader(
     dataset,
