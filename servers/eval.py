@@ -220,6 +220,7 @@ def main():
     checkpoints_dir = "/spell/checkpoints"
     model = TwitterSentimentExtractionModel()
     model.load_state_dict(torch.load(f"{checkpoints_dir}/model_5.pth"))
+    model.to(device)
     model.eval()
     
     print(f"Evaluating the model...")
