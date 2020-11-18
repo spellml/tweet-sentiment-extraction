@@ -216,7 +216,7 @@ def eval_fn(dataloader, model, device):
 def main():
     checkpoints_dir = "/spell/checkpoints"
     model = TwitterSentimentExtractionModel()
-    model.load_state_dict(f"{checkpoints_dir}/model_5.pth")
+    model.load_state_dict(torch.load(f"{checkpoints_dir}/model_5.pth"))
     model.eval()
     
     print(f"Evaluating the model...")
