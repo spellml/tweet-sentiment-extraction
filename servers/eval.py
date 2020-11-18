@@ -184,8 +184,10 @@ class TwitterSentimentExtractionModel(torch.nn.Module):
 batch_size = 64
 if torch.cuda.device_count() > 1:
     device = torch.device("cuda")
+    is_cpu_run = False
 else:
     device = torch.device("cpu")
+    is_cpu_run = True
 
 # dataset and dataloader
 dataset = TwitterSentimentExtractionDataset(X_train_df)
@@ -222,7 +224,13 @@ def eval_fn(dataloader, model, device):
 def main():
     checkpoints_dir = "/spell/checkpoints"
     model = TwitterSentimentExtractionModel()
-    model.load_state_dict(torch.load(f"{checkpoints_dir}/model_5.pth"))
+    
+    if is_cpu_run:
+        weights = torch.load(f"{checkpoints_dir}/model_5.pth", map_location=torch.device('cpu'))
+    else:
+        weights = torch.load(f"{checkpoints_dir}/model_5.pth")
+
+    model.load_state_dict(weights)
     model.to(device)
     model.eval()
     

@@ -219,7 +219,7 @@ def eval_fn(dataloader, model, device):
 def main():
     checkpoints_dir = "/spell/checkpoints"
     model = TwitterSentimentExtractionModel()
-    model.load_state_dict(torch.load(f"{checkpoints_dir}/model_5.pth"))
+    model.load_state_dict(torch.load(f"{checkpoints_dir}/model_5.pth", map_location=torch.device('cpu')))
     qmodel = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
     qmodel.to(device)
     qmodel.eval()
