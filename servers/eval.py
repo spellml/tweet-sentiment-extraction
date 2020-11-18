@@ -181,6 +181,7 @@ class TwitterSentimentExtractionModel(torch.nn.Module):
         # return y_start, y_end
 
 # dataset and dataloader
+batch_size = 64
 dataset = TwitterSentimentExtractionDataset(X_train_df)
 dataloader = torch.utils.data.DataLoader(
     dataset,
@@ -209,6 +210,7 @@ def eval_fn(dataloader, model, device):
 
         y_pred_starts = torch.softmax(y_pred_start_logits, dim=1).cpu().detach().numpy()
         y_pred_ends = torch.softmax(y_pred_end_logits, dim=1).cpu().detach().numpy()
+        return y_pred_starts, y_pred_ends
 
 
 def main():
