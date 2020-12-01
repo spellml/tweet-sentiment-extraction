@@ -1,4 +1,4 @@
-# import torch
+import torch
 # import numpy as np
 # from PIL import Image
 
@@ -12,7 +12,11 @@ from spell.serving import BasePredictor
 
 class Predictor(BasePredictor):
     def __init__(self):
-        pass
+        if torch.cuda.device_count() >= 1:
+            self.device = torch.device("cuda")
+        else:
+            self.device = torch.device("cpu")
+        self.model = torch.load(f"model.pth", map_location=self.device)
 
     def predict(self, payload):
-        return "Hello World!"
+        return payload
