@@ -87,5 +87,5 @@ class Predictor(BasePredictor):
             token_type_ids=token_type_ids
         )
         start_logits = start_logits.detach().tolist()
-        end_logits = start_logits.detach().tolist()
+        end_logits = end_logits.detach().tolist()
         return {"start_logits": start_logits, "end_logits": end_logits}
