@@ -47,6 +47,8 @@ class Predictor(BasePredictor):
             self.device = torch.device("cuda")
         else:
             self.device = torch.device("cpu")
+
+        self.model = TwitterSentimentExtractionModel()
         self.model.load_state_dict(torch.load(f"/model/model.pth", map_location=self.device))
 
     def predict(self, payload):
