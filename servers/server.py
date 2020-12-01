@@ -16,7 +16,7 @@ class Predictor(BasePredictor):
             self.device = torch.device("cuda")
         else:
             self.device = torch.device("cpu")
-        self.model = torch.load(f"model.pth", map_location=self.device)
+        self.model = torch.load(f"model/model.pth", map_location=self.device)
 
     def predict(self, payload):
         return payload
