@@ -54,6 +54,7 @@ class Predictor(BasePredictor):
 
         self.model = TwitterSentimentExtractionModel()
         self.model.load_state_dict(torch.load(f"/model/model.pth", map_location=self.device))
+        self.model.to(self.device)
         self.model.eval()
 
     def predict(self, payload):
