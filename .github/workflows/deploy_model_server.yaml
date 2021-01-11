@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo $SPELL_AUTH
-        with:
+      - env:
           SPELL_AUTH: ${{ secrets.SPELL_AUTH }}
+        run: echo $SPELL_AUTH
