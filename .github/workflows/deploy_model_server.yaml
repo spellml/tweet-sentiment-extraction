@@ -1,0 +1,11 @@
+name: deploy-model-server
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: update-model-server
+        with:
+          spell_auth: ${{ secrets.SPELL_AUTH }}
+      - uses: actions/checkout@v2
+      - run: ls
