@@ -22,4 +22,4 @@ jobs:
       # ci steps
       - name: update-model-server
         shell: bash
-        run: scripts/deploy_model_server.sh
+        run: scripts/update_model_server.sh
