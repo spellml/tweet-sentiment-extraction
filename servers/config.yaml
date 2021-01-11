@@ -1,0 +1,9 @@
+# Model server configuration command file.
+server-name: tweet-sentiment-extraction
+model: tweet-sentiment-extraction:v1
+entrypoint: servers/serve.py
+pip:
+  - transformers==3.5.1
+  - tokenizers
+node-group: t4
+gpu-limit: 1
