@@ -6,7 +6,3 @@ jobs:
     steps:
       - name: checkout-repo
         uses: actions/checkout@v2
-      - name: update-model-server
-        with:
-          spell_auth: ${{ secrets.SPELL_AUTH }}
-        run: ls
