@@ -7,4 +7,5 @@ jobs:
       - uses: actions/checkout@v2
       - env:
           SPELL_AUTH: ${{ secrets.SPELL_AUTH }}
-        run: echo $SPELL_AUTH
+        shell: bash
+        run: echo "$SPELL_AUTH"
