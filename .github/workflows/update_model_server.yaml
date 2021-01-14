@@ -1,0 +1,25 @@
+name: deploy-model-server
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # initialization steps
+      - name: checkout-repo
+        uses: actions/checkout@v2
+      - name: install-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      - name: install-spell
+        shell: bash
+        run: python3 -m pip install spell
+      - name: log-into-spell
+        env:
+          CI_USER_PASSWORD: ${{ secrets.CI_USER_PASSWORD }}
+        shell: bash
+        run: spell login --identity github@spell.ml --password "$CI_USER_PASSWORD"
+      # ci steps
+      - name: update-model-server
+        shell: bash
+        run: scripts/update_model_server.sh
