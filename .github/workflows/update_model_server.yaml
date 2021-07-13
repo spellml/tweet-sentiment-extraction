@@ -27,4 +27,4 @@ jobs:
       # ci steps
       - name: update-model-server
         shell: bash
-        run: spell server update --from-file $PWD/servers/config.yaml
+        run: spell server update --from-file $PWD/servers/config.yaml || 0
