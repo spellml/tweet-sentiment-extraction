@@ -1,5 +1,7 @@
 name: deploy-model-server
 on: [push]
+  branches:
+    - master
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -7,6 +9,8 @@ jobs:
       # initialization steps
       - name: checkout-repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: install-python
         uses: actions/setup-python@v2
         with:
@@ -22,4 +26,4 @@ jobs:
       # ci steps
       - name: update-model-server
         shell: bash
-        run: scripts/update_model_server.sh
+        run: spell server update --from-file $PWD/servers/config.yaml
