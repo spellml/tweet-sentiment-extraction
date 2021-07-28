@@ -20,11 +20,12 @@ jobs:
         shell: bash
         run: python3 -m pip install spell
       - name: log-into-spell
-        env:
-          CI_USER_PASSWORD: ${{ secrets.CI_USER_PASSWORD }}
         shell: bash
         run: spell login --identity github@spell.ml --password "$CI_USER_PASSWORD"
       # ci steps
       - name: update-model-server
+        env:
+          SPELL_TOKEN: ${{ secrets.CI_TOKEN }}
+          SPELL_OWNER: "external-aws"
         shell: bash
         run: spell server update --from-file $PWD/servers/config.yaml || true
