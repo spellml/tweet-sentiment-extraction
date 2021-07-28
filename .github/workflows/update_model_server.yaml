@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - ci-tokens-flow
 jobs:
   deploy:
     runs-on: ubuntu-latest
