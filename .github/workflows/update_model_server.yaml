@@ -20,9 +20,6 @@ jobs:
       - name: install-spell
         shell: bash
         run: python3 -m pip install spell
-      - name: log-into-spell
-        shell: bash
-        run: spell login --identity github@spell.ml --password "$CI_USER_PASSWORD"
       # ci steps
       - name: update-model-server
         env:
