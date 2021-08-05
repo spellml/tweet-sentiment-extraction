@@ -26,4 +26,4 @@ jobs:
           SPELL_TOKEN: ${{ secrets.CI_TOKEN }}
           SPELL_OWNER: "external-aws"
         shell: bash
-        run: echo $(spell owner) && mkdir $HOME/.spell/ && spell server update --from-file $PWD/servers/config.yaml || true
+        run: spell server update --from-file $PWD/servers/config.yaml || true
