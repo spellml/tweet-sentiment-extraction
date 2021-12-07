@@ -23,6 +23,14 @@ jobs:
       - name: update-model-server
         env:
           SPELL_TOKEN: ${{ secrets.CI_TOKEN }}
+          # replace "external-aws" with your org name
           SPELL_OWNER: "external-aws"
         shell: bash
-        run: mkdir $HOME/.spell/ && spell keys generate && spell server update --from-file $PWD/servers/config.yaml || true
+        run: spell keys generate --title ci-job && spell server update --from-file $PWD/servers/config.yaml
+      - name: clean-up-ssh-key
+        if: always()
+        env:
+          SPELL_TOKEN: ${{ secrets.CI_TOKEN }}
+          SPELL_OWNER: "external-aws"
+        shell: bash
+        run: spell keys rm --title ci-job
